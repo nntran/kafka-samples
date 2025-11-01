@@ -21,7 +21,7 @@ docker compose up -d
 docker compose logs -f kafka-streams-uppercase
 
 # Accéder à Kafka UI
-open http://localhost:8080
+open http://kafka.localhost
 ```
 
 ### Test de l'application
