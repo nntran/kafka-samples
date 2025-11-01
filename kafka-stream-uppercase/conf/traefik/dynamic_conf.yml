@@ -1,0 +1,7 @@
+
+# Optionnel : utile pour SSL local en auto-signé, sinon on reste en HTTP en dev
+#tls:
+#  certificates:
+#    - certFile: /certs/dev-cert.pem
+#      keyFile: /certs/dev-key.pem
+

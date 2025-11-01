@@ -1,0 +1,59 @@
+api:
+  dashboard: true
+
+providers:
+  docker:
+    exposedByDefault: false
+  file:
+    filename: /dynamic_conf.yml
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+  metrics:
+    address: ":9100"                  # pour Prometheus
+
+tracing:
+  serviceName: traefik
+  otlp:
+    http:
+      endpoint: "http://otel-collector:4318/v1/traces"  
+      #endpoint: "otel-collector:4317" # Collector en TCP gRPC
+    #insecure: true
+
+metrics:
+  otlp:
+    http:
+      endpoint: "http://otel-collector:4318/v1/metrics" 
+  prometheus:
+    entryPoint: metrics               # exposer les métriques
+    addEntryPointsLabels: true
+    addServicesLabels: true
+    buckets:
+      - 0.1
+      - 0.3
+      - 1.2
+      - 5.0
+
+log:
+  format: json
+  level: INFO
+
+# https://doc.traefik.io/traefik/observe/logs-and-access-logs/
+accessLog:
+  format: json
+  filters:
+    statusCodes:
+      - "200"
+      - "400-404"
+      - "500-503"
+  fields:
+    names:
+      ClientUsername: drop
+    headers:
+      defaultMode: keep
+      names:
+        User-Agent: redact
+        Content-Type: keep
