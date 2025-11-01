@@ -6,7 +6,7 @@ on:
     types: [opened, edited, synchronize]
 
 permissions:
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   validate-title:
